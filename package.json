@@ -1,0 +1,20 @@
+{
+  "name": "setoranngaji-marketing-bot",
+  "version": "1.0.0",
+  "description": "Telegram Approval & Social Media Automation Pipeline for SetoranNgaji",
+  "main": "telegram_approval_bot.js",
+  "scripts": {
+    "start": "node telegram_approval_bot.js",
+    "pipeline": "node auto_poster_pipeline.js"
+  },
+  "keywords": [
+    "telegram-bot",
+    "marketing-automation",
+    "setoranngaji"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
