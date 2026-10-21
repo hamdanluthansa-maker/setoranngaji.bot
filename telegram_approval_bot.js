@@ -10,6 +10,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
+
+// Server mini agar bisa menggunakan paket GRATIS (Web Service) di Render
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('SetoranNgaji Marketing Bot is Active 24/7!');
+}).listen(PORT, () => {
+  console.log(`🌐 Health check server berjalan di port ${PORT} (Free Tier Ready)`);
+});
 
 const QUEUE_FILE = path.join(__dirname, 'content_queue.json');
 const ENV_FILE = path.join(__dirname, '.env');
