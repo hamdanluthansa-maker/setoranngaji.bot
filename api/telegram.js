@@ -21,17 +21,20 @@ const samplePosts = [
   {
     id: "post-001",
     title: "Masalah Rekap Manual Kertas",
-    status: "posted"
+    status: "posted",
+    image: "https://setoranngajibot.vercel.app/images/template_1.png"
   },
   {
     id: "post-002",
     title: "Ekosistem 4 Portal Lengkap",
-    status: "approved"
+    status: "approved",
+    image: "https://setoranngajibot.vercel.app/images/template_2.png"
   },
   {
     id: "post-003",
     title: "Akses Demo Gratis Khusus Lembaga",
     status: "pending",
+    image: "https://setoranngajibot.vercel.app/images/template_3.png",
     caption: `Khusus pengurus Rumah Tahfidz & TPQ di seluruh Indonesia! 📢\n\nIngin rasakan mudahnya mengelola setoran santri tanpa kertas mutaba'ah manual? Kami membuka akses DEMO GRATIS untuk lembaga Anda.\n\nKetik "DEMO" di kolom komentar atau klik link di bio untuk mendaftarkan lembaga Anda hari ini! 🌟\n\n#SetoranNgaji #RumahTahfidzIndonesia #SantriHebat #TahfidzQuran`
   }
 ];
@@ -90,12 +93,22 @@ module.exports = async (req, res) => {
             ]
           };
 
-          await callTelegram('sendMessage', {
-            chat_id: chatId,
-            text: reviewText,
-            parse_mode: 'Markdown',
-            reply_markup: keyboard
-          });
+          if (post.image) {
+            await callTelegram('sendPhoto', {
+              chat_id: chatId,
+              photo: post.image,
+              caption: reviewText,
+              parse_mode: 'Markdown',
+              reply_markup: keyboard
+            });
+          } else {
+            await callTelegram('sendMessage', {
+              chat_id: chatId,
+              text: reviewText,
+              parse_mode: 'Markdown',
+              reply_markup: keyboard
+            });
+          }
         }
       } else if (text === '/status') {
         let statusMsg = `📊 *Status Konten Iklan SetoranNgaji (Cloud 24/7):*\n\n` +
@@ -123,12 +136,24 @@ module.exports = async (req, res) => {
 
       if (data.startsWith('approve:')) {
         const postId = data.split(':')[1];
-        await callTelegram('editMessageText', {
+        const approvedCaption = `✅ *DISETUJUI (APPROVED)!*\n\nKonten *${postId}* telah Anda setujui dan siap diterbitkan ke media sosial. 🚀`;
+        
+        // Coba edit caption jika pesan berupa foto, atau edit text jika pesan berupa teks biasa
+        const editRes = await callTelegram('editMessageCaption', {
           chat_id: chatId,
           message_id: messageId,
-          text: `✅ *DISETUJUI (APPROVED)!*\n\nKonten *${postId}* telah disetujui dari HP Anda dan dijadwalkan untuk auto-post. 🚀`,
+          caption: approvedCaption,
           parse_mode: 'Markdown'
         });
+
+        if (!editRes.ok) {
+          await callTelegram('editMessageText', {
+            chat_id: chatId,
+            message_id: messageId,
+            text: approvedCaption,
+            parse_mode: 'Markdown'
+          });
+        }
       } else if (data.startsWith('revise:')) {
         const postId = data.split(':')[1];
         await callTelegram('sendMessage', {
