@@ -34,7 +34,7 @@ const samplePosts = [
     id: "post-003",
     title: "Akses Demo Gratis Khusus Lembaga",
     status: "pending",
-    image: "https://setoranngajibot.vercel.app/images/template_3.png",
+    image: "https://setoranngajibot.vercel.app/images/poster_ad_pro.jpg",
     caption: `Khusus pengurus Rumah Tahfidz & TPQ di seluruh Indonesia! 📢\n\nIngin rasakan mudahnya mengelola setoran santri tanpa kertas mutaba'ah manual? Kami membuka akses DEMO GRATIS untuk lembaga Anda.\n\nKetik "DEMO" di kolom komentar atau klik link di bio untuk mendaftarkan lembaga Anda hari ini! 🌟\n\n#SetoranNgaji #RumahTahfidzIndonesia #SantriHebat #TahfidzQuran`
   }
 ];
